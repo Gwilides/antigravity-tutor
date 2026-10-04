@@ -27,9 +27,7 @@
   - [`/teach <topic>`: The 5-Phase Teaching Lifecycle](#teach-topic-the-5-phase-teaching-lifecycle)
   - [`/refresh [domain]`: High-Efficiency Active Recall Workout](#refresh-domain-high-efficiency-active-recall-workout)
   - [`/status`: Knowledge Frontier & Retention Dashboard](#status-knowledge-frontier--retention-dashboard)
-- [5. Obsidian Vault Setup & Best Practices](#5-obsidian-vault-setup--best-practices)
-  - [Graph View Configuration](#graph-view-configuration)
-  - [Dataview Community Plugin Integration](#dataview-community-plugin-integration)
+- [5. Obsidian Graph View Setup](#5-obsidian-graph-view-setup)
 - [6. CLI Engine Reference (`scripts/graph.py`)](#6-cli-engine-reference-scriptsgraphpy)
   - [`sync`](#sync)
   - [`refresh`](#refresh)
@@ -42,7 +40,7 @@
 
 ## 1. Overview & Core Features
 
-**Antigravity Tutor** transforms [Google Antigravity](https://antigravity.google) into a personalized, autonomous Socratic mentor. Rather than dumping passive lecture monologues, it guides you through concepts step by step and builds a persistent, self-reinforcing dependency graph of knowledge directly in your personal [Obsidian](https://obsidian.md/) vault.
+**Antigravity Tutor** transforms [Google Antigravity](https://antigravity.google) into a personalized, autonomous Socratic mentor. Instead of generating lengthy passive lectures, it guides you through concepts step by step and builds a persistent, self-reinforcing dependency graph of knowledge directly in your personal [Obsidian](https://obsidian.md/) vault.
 
 | Traditional AI Tutoring | Antigravity Tutor |
 | :--- | :--- |
@@ -55,7 +53,7 @@
 
 ## 2. Two-Tier Data Architecture (Stream vs. Garden)
 
-To eliminate the "junk drawer" syndrome that plagues personal knowledge bases, Antigravity Tutor strictly separates transient session logs from timeless, crystallized mental models.
+To maintain an organized knowledge base, Antigravity Tutor strictly separates transient session logs from permanent concept notes.
 
 ```text
 <vault_path>/
@@ -188,16 +186,16 @@ Each domain features an `_index.md` serving as an architectural map. It contains
      "vault_path": "~/Documents/Obsidian/LearningVault"
    }
    ```
-   > [!NOTE]
-   > Tilde expansion (`~`) is fully supported. Paths can be relative or absolute.
-   > If `config.json` is missing when you invoke a slash command, the mentor will automatically prompt you for your vault path and generate `config.json` for you.
-   > `config.json` is ignored in `.gitignore` and is never committed.
-
 3. **Open your vault in Obsidian:**
    Launch Obsidian and open the folder configured in `vault_path`.
 
 4. **Start learning in Google Antigravity:**
    Open this repository workspace in [Google Antigravity](https://antigravity.google) and type `/teach <topic>` in the chat.
+
+> [!NOTE]
+> - **Tilde expansion (`~`) is supported:** Paths can be relative or absolute.
+> - **Automatic setup:** If `config.json` is missing on your first run, the mentor will prompt you for your vault path and generate it automatically.
+> - **Git-safe:** `config.json` is ignored in `.gitignore` and is never committed.
 
 ---
 
@@ -244,16 +242,14 @@ flowchart TD
 #### Phase 2: Plan & Orient (Curriculum Mapping)
 - **Fact-Checking:** Verifies formal definitions, RFCs, and theorems (delegating to the `research` subagent when necessary).
 - **DAG Roadmapping:** Renders a 2–3 step dependency roadmap in chat and in the session note.
-- **Seamless Transition:** Does **not** wait for user plan approval — learners cannot objectively evaluate curricula for unfamiliar subjects. Step 1 begins immediately.
+- **Seamless Transition:** Step 1 begins immediately after planning to maintain active learning momentum.
 
 #### Phase 3: Teach Loop ("One Reasoning Step at a Time")
-The rhythmic heart of the system:
+The core learning workflow:
 1. **Atomic Quantum:** Motivation $\to$ Mechanism $\to$ Distinctions & Traps.
 2. **Live Mirroring:** Real-time updates appended directly to `<vault_path>/sessions/YYYY-MM-DD-<topic>.md`.
 3. **Metronome Quiz:** Interactive modal dialog (`ask_question`) with 3–4 plausible options and an `"I don't know"` safety valve.
-4. **Remediation & Anti-Guessing:**
-   - **CRITICAL PEDAGOGICAL RULE:** If you answer incorrectly or select *"I don't know"*, the mentor **NEVER gives away the answer and moves on**.
-   - It pivots to an alternative physical metaphor, breaks down the quantum into smaller sub-steps, and tests again with an alternative question.
+4. **Guided Remediation:** If you answer incorrectly or select *"I don't know"*, the mentor helps you reason toward the solution rather than simply revealing the answer. It pivots to an intuitive analogy or breaks the concept into smaller sub-steps before re-testing.
 5. **Incremental Concept Crystallization:** As soon as an atomic concept is mastered, its permanent card is written to `<vault_path>/knowledge/<domain>/<slug>.md`.
 6. **Practical 1st-Order FIRe:** When concept $B$ is crystallized, all immediate parents in its `depends_on` list automatically have their `last_tested` date updated to today.
 
@@ -266,9 +262,9 @@ The rhythmic heart of the system:
 
 ### `/refresh [domain]`: High-Efficiency Active Recall Workout
 
-Traditional Spaced Repetition Systems (Anki, SuperMemo) suffer from **Review Hell** — miss a few weeks, and hundreds of overdue reviews accumulate, creating guilt and abandonment. 
+Traditional spaced repetition systems (like Anki or SuperMemo) can accumulate overwhelming backlogs of overdue cards if you take a break.
 
-Antigravity Tutor replaces this with a voluntary, cap-limited workout:
+Antigravity Tutor replaces review backlogs with a voluntary, cap-limited workout:
 - **Strict Review Cap:** Each session selects **only 3–5 high-priority cards** (under 5 minutes).
 - **Exponential Retention Formula:**
   $$R = 2^{-\frac{\Delta t}{I}}$$
@@ -291,16 +287,13 @@ Provides an instant overview of your knowledge graph across all domains:
 
 ---
 
-## 5. Obsidian Vault Setup & Best Practices
+## 5. Obsidian Graph View Setup
 
-To maximize the visual power of your knowledge graph, configure Obsidian with the following recommendations:
-
-### Graph View Configuration
+To maximize the visual clarity of your knowledge graph in native Obsidian:
 
 1. **Filters:**
    - **Search:** `path:knowledge` (focuses strictly on crystallized concept cards).
-   - **Tags:** Include tags if you use thematic markers.
-   - **Attachments & Existing Files Only:** Enable *Existing files only* to hide dangling virtual links.
+   - **Existing files only:** **ON** (hides dangling virtual links to uncreated concepts).
 2. **Groups & Color Coding:**
    Configure color groups in Graph View settings:
    - `["status": "solid"]` $\to$ **Emerald Green** (`#4caf50`)
@@ -310,27 +303,6 @@ To maximize the visual power of your knowledge graph, configure Obsidian with th
 3. **Display:**
    - **Arrows:** **ON** (Essential for visualizing DAG prerequisite flows).
    - **Node Size:** Map to incoming links (Hub nodes will appear larger).
-
-### Dataview Community Plugin Integration
-
-Install the [Dataview](https://github.com/blacksmithgu/obsidian-dataview) plugin in Obsidian for real-time dashboards:
-
-#### Active Review & Retention Queue
-```dataview
-TABLE domain, status, interval_days, date(today) - last_tested AS days_elapsed
-FROM "knowledge"
-WHERE file.name != "_index"
-SORT days_elapsed DESC
-LIMIT 10
-```
-
-#### Concepts Ready for Review / Shaky Foundation
-```dataview
-TABLE domain, last_tested, interval_days
-FROM "knowledge"
-WHERE status = "shaky"
-SORT last_tested ASC
-```
 
 ---
 
