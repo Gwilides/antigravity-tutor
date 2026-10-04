@@ -25,7 +25,9 @@ antigravity-tutor/
 ├── .agents/
 │   └── skills/
 │       ├── teach/
-│       │   └── SKILL.md                 # Педагогическое ядро (/teach, /refresh, One reasoning step at a time)
+│       │   └── SKILL.md                 # Педагогическое ядро (/teach, One reasoning step at a time, 5 Phases)
+│       ├── refresh/
+│       │   └── SKILL.md                 # Активное вспоминание (/refresh, 5-min workout, Hub Priority, R)
 │       └── visualize/
 │           └── SKILL.md                 # Генерация и верификация диаграмм (Mermaid, KaTeX)
 │
@@ -150,9 +152,10 @@ antigravity-tutor/
 
 ---
 
-### Задача 5: Интеграция протокола активного вспоминания `/refresh` в навык `teach` и правила `GEMINI.md`
-* [x] Маршрутизация команд `/teach`, `/refresh`, `/status` зафиксирована в `GEMINI.md`.
-* [x] Обработка добровольных сессий `/refresh` интегрирована в `.agents/skills/teach/SKILL.md`: запуск отбора 3–5 карточек через `graph.py refresh`, сократический диалог активного вспоминания и обновление статуса карточек (`Solid` / `Shaky`) и интервала $I$. Лишний промежуточный скилл `learn` упразднён.
+### Задача 5: Разработка навыка активного вспоминания `refresh` (`.agents/skills/refresh/SKILL.md`)
+* [x] Создан отдельный специализированный навык `refresh` для 5-минутной разминки памяти: запуск отбора 3–5 карточек через `graph.py refresh`, Amnesia Protocol (>30 дней), сократический диалог активного вспоминания через `ask_question` и обновление статуса карточек (`Solid` / `Shaky`) и интервала $I$ через `graph.py update-card`.
+* [x] Навык `teach` сфокусирован на глубоком 5-фазном обучении (`/teach`).
+* [x] Маршрутизация команд `/teach`, `/refresh`, `/status` зафиксирована в `GEMINI.md`. Лишний промежуточный скилл `learn` упразднён.
 
 ---
 

@@ -2,9 +2,10 @@
 name: teach
 description: >-
   Autonomous Socratic deep-learning mentor for Google Antigravity.
-  Executes structured deep-learning sessions (/teach) and voluntary 5-minute active recall workouts (/refresh)
+  Executes structured deep-learning sessions (/teach) through the rigorous 5-phase learning lifecycle
+  (Resume & Recall → Adaptive Probe → Plan & Orient → Teach Loop → Complete & Sync)
   with the rhythmic "One reasoning step at a time" cadence, motivated discovery, live Obsidian mirroring,
-  modal quizzes, Hub Priority retention, and incremental concept crystallization.
+  modal quizzes, and incremental concept crystallization.
 ---
 
 # Pedagogical Skill: Socratic Deep-Learning Mentor (`teach`)
@@ -360,44 +361,3 @@ flowchart LR
 > [!question] Check Understanding
 > Verified via interactive quiz.
 ```
-
----
-
-## 7. Voluntary Active Recall Mode: `/refresh [domain]`
-
-When the user requests `/refresh [domain]`, execute a high-efficiency 5-minute active recall workout on 3–5 high-priority concept cards without entering a full multi-step lecture.
-
-### Operating Protocol:
-1. **Selection Query:**
-   * Run the graph CLI to select candidate cards:
-     ```bash
-     python3 scripts/graph.py refresh [--domain <domain>]
-     ```
-   * Cards are prioritized by:
-     - Forgetting window $0.4 \le R \le 0.6$ (using $R = 2^{-\frac{\Delta t}{I}}$).
-     - Topological Hub Priority (number of incoming dependencies).
-     - Strict review cap: 3–5 cards.
-
-2. **Amnesia Protocol Check:**
-   * If `graph.py refresh` signals an Amnesia alert ($\Delta t > 30$ days), begin with 1–2 gentle high-level macro questions to reactivate mental models before challenging detailed mechanisms.
-
-3. **Active Recall Testing (Per Card):**
-   * For each selected card:
-     - Pose **exactly 1 sharp conceptual challenge** via `ask_question` testing the core insight or mechanism (not rote definition).
-     - If the learner answers correctly with solid derivation:
-       - Validate briefly.
-       - Update card status to `solid`:
-         ```bash
-         python3 scripts/graph.py update-card --slug <slug> [--domain <domain>] --result solid
-         ```
-       - Interval advances stepwise: $3 \to 7 \to 16 \to 35 \to 90$ days.
-     - If the learner hesitates, answers incorrectly, or selects "I don't know":
-       - Provide a concise intuitive refresher (analogy or physical intuition; do not lecture).
-       - Update card status to `shaky`:
-         ```bash
-         python3 scripts/graph.py update-card --slug <slug> [--domain <domain>] --result shaky
-         ```
-       - Interval resets to 1 day.
-
-4. **Session Conclusion:**
-   * Conclude with a brief, encouraging summary of refreshed cards and next review outlook. Keep the total workout strictly under 5 minutes. No review hell.
