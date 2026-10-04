@@ -6,18 +6,13 @@
 
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![Obsidian](https://img.shields.io/badge/Obsidian-Knowledge%20Graph-8b5cf6.svg)](https://obsidian.md/)
-[![Google Antigravity](https://img.shields.io/badge/Antigravity-Autonomous%20Agent-orange.svg)](#)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Google Antigravity](https://img.shields.io/badge/Antigravity-Autonomous%20Agent-orange.svg)](https://antigravity.google)
 
 ---
 
 ## Table of Contents
 
-- [1. Overview & Core Philosophy](#1-overview--core-philosophy)
-  - [The Click (Cognitive Compression)](#the-click-cognitive-compression)
-  - [Principle I: Unconditional Truths First](#principle-i-unconditional-truths-first)
-  - [Principle II: Motivated Discovery](#principle-ii-motivated-discovery)
-  - [Zero Passive Lectures ("One Reasoning Step at a Time")](#zero-passive-lectures-one-reasoning-step-at-a-time)
+- [1. Overview & Core Features](#1-overview--core-features)
 - [2. Two-Tier Data Architecture (Stream vs. Garden)](#2-two-tier-data-architecture-stream-vs-garden)
   - [Decoupled Vault Model](#decoupled-vault-model)
   - [Tier 1: Stream (`sessions/`)](#tier-1-stream-sessions)
@@ -42,47 +37,19 @@
   - [`new-session`](#new-session)
   - [`update-card`](#update-card)
 - [7. Repository Structure](#7-repository-structure)
-- [8. Language Conventions](#8-language-conventions)
-- [9. Credits & Acknowledgments](#9-credits--acknowledgments)
 
 ---
 
-## 1. Overview & Core Philosophy
+## 1. Overview & Core Features
 
-**Antigravity Tutor** transforms [Google Antigravity](https://deepmind.google/) into a personalized, autonomous Socratic mentor. It is designed to replace passive tutorials and fragmented rote memorization with a persistent, evolving, self-reinforcing knowledge graph in your personal [Obsidian](https://obsidian.md/) vault.
-
-Rather than acting as a textbook or search engine that generates walls of unearned text, Antigravity Tutor operates on foundational cognitive and pedagogical principles derived from Knowledge Space Theory (KST), Amos Blomqvist's active learning framework, Andy Matuschak's Evergreen Notes, and Grant Sanderson's (3Blue1Brown) motivated explanations.
+**Antigravity Tutor** transforms [Google Antigravity](https://antigravity.google) into a personalized, autonomous Socratic mentor. Rather than dumping passive lecture monologues, it guides you through concepts step by step and builds a persistent, self-reinforcing dependency graph of knowledge directly in your personal [Obsidian](https://obsidian.md/) vault.
 
 | Traditional AI Tutoring | Antigravity Tutor |
 | :--- | :--- |
-| **Passive Lecture Monologues:** Generates multi-paragraph explanations that the user skims without processing. | **Zero Passive Lectures:** Enforces a strict *"One reasoning step at a time"* cadence with immediate comprehension checks. |
-| **Rote Fact Stacking:** Presents isolated facts and syntactical recipes that decay rapidly. | **Motivated Discovery:** Reconstructs concepts causally: *"How could you have invented this yourself?"* |
-| **Ephemeral Chat Logs:** Explanations disappear in chat history once the session terminates. | **Two-Tier Obsidian Vault:** Real-time session journaling (Stream) and permanent atomic concept cards (Garden). |
-| **Review Hell:** Spaced repetition systems pile up hundreds of overdue cards, inducing anxiety. | **Cap-Limited `/refresh`:** 5-minute workouts (3–5 cards) prioritized by topological hub centrality and forgetting curves. |
-
-### The Click (Cognitive Compression)
-
-Rote-memorized facts rot and degrade because they have no anchors in your memory. Understood facts, by contrast, are held firmly in place by causal graph connections: if a specific detail slips from memory, you can readily re-derive it from first principles. Antigravity Tutor guides you toward "The Click" — the cognitive moment where disconnected facts collapse into an intuitive, generative mental model.
-
-### Principle I: Unconditional Truths First
-
-Every concept is anchored to caveat-free, undeniable truths (axioms, universal physical limits, strict definitions). The human brain readily commits to unconditional statements because nothing more fundamental can overturn them.
-- *Unconditional Truth:* Accepted as-is without preconditions (e.g., *"All operating system threads allocate a kernel-managed stack"*).
-- *Axiom:* A foundational root node in the dependency graph with zero incoming edges.
-
-Foundational truths are always verified before building higher-level abstractions.
-
-### Principle II: Motivated Discovery
-
-Emulating Grant Sanderson (3Blue1Brown), every lesson begins with the tension that forced pioneers to create the solution: *"Why did the previous approach fail? What architectural puzzle forced the invention of this mechanism?"* Solutions are never announced from above; they are arrived at naturally as the inevitable answer to the motivating problem.
-
-### Zero Passive Lectures ("One Reasoning Step at a Time")
-
-The mentor never outputs long, multi-topic monologues. Instruction progresses strictly through atomic reasoning quanta:
-1. **Problem Motivation:** Why existing mechanisms break.
-2. **Solution Mechanism:** How the new mechanism resolves the tension.
-3. **Distinctions & Traps:** Contrasting with neighboring concepts and highlighting edge-case pitfalls.
-4. **Metronome Quiz:** Interactive verification before proceeding to the next step.
+| **Passive Lecture Monologues** | **Socratic Cadence:** Advances "one reasoning step at a time" with interactive comprehension quizzes. |
+| **Rote Fact Memorization** | **Motivated Discovery:** Explores the causal problem first (*"Why did existing approaches fail? What forced this invention?"*). |
+| **Ephemeral Chat Logs** | **Two-Tier Obsidian Vault:** Live session journals (`sessions/`) and permanent concept cards (`knowledge/`). |
+| **Spaced Repetition Overload** | **Targeted `/refresh`:** 5-minute active recall workouts (3–5 cards) prioritized by dependency topology and forgetting curves. |
 
 ---
 
@@ -132,7 +99,7 @@ The tutor engine code (`antigravity-tutor/`) is fully decoupled from personal no
 
 ### Anatomy of an Evergreen Concept Card
 
-Each card adheres to Andy Matuschak's declarative thesis titles and Amos Blomqvist's 4-part causal derivation:
+Each card adheres to declarative thesis titles and a 4-part causal derivation:
 
 ```markdown
 ---
@@ -159,7 +126,7 @@ refines: []
 # Goroutines multiplex across OS threads in user space via the M:N scheduler
 
 ### 1. Foundation (Unconditional Truths)
-An operating system kernel thread requires a fixed, preallocated stack (typically 1–2 MB). Switching execution between OS threads incurs a kernel context trap.
+An operating system thread requires a fixed, preallocated execution stack (typically 1–8 MB). Switching execution between OS threads requires a kernel-level context switch.
 
 ### 2. Motivation (What problem forced this?)
 High-concurrency network servers handling 1,000,000 concurrent sockets (C1000K) run out of memory if an OS thread is allocated per connection, and CPU cycles are wasted on context switches.
@@ -193,7 +160,7 @@ Each domain features an `_index.md` serving as an architectural map. It contains
 - **Python 3.9+**
 - **PyYAML 6.0+** (`pyyaml>=6.0`)
 - **[Obsidian](https://obsidian.md/)** (Desktop application)
-- **[Google Antigravity](https://deepmind.google/)** (with Agentic coding capabilities)
+- **[Google Antigravity](https://antigravity.google)** (with Agentic coding capabilities)
 
 ### Installation
 
@@ -228,6 +195,9 @@ Each domain features an `_index.md` serving as an architectural map. It contains
 
 3. **Open your vault in Obsidian:**
    Launch Obsidian and open the folder configured in `vault_path`.
+
+4. **Start learning in Google Antigravity:**
+   Open this repository workspace in [Google Antigravity](https://antigravity.google) and type `/teach <topic>` in the chat.
 
 ---
 
@@ -366,7 +336,7 @@ SORT last_tested ASC
 
 ## 6. CLI Engine Reference (`scripts/graph.py`)
 
-The standalone Python CLI engine manages graph validation, Knowledge Space Theory frontier computation, and active recall scheduling:
+The standalone Python CLI engine manages graph validation, dependency frontier computation, and active recall scheduling:
 
 ```bash
 python3 scripts/graph.py <subcommand> [options]
@@ -381,7 +351,7 @@ python3 scripts/graph.py sync --domain languages/go
 # Sync all domains in the vault
 python3 scripts/graph.py sync
 ```
-- **Cycle Detection:** Employs Tarjan's DFS algorithm. If a dependency cycle ($A \to B \to A$) is detected, the script terminates immediately with an error and descriptive chain before modifying files.
+- **Cycle Detection:** Employs DFS cycle detection. If a dependency cycle ($A \to B \to A$) is detected, the script terminates immediately with an error and descriptive chain before modifying files.
 - **Frontier Calculation:** Categorizes nodes into Mastered Foundation, Inner Fringe, Outer Fringe (Ready), and Next Step (Locked).
 - **Compact Mermaid Horizon:** Caps rendered diagrams at 10–15 nodes using node collapsing for deep foundation.
 
@@ -433,38 +403,15 @@ antigravity-tutor/
 │           └── SKILL.md             # Visual rendering engine (Mermaid, KaTeX, Obsidian formatting)
 │
 ├── scripts/
-│   └── graph.py                     # CLI engine (KST frontier, Tarjan cycle check, FSRS/FIRe retention)
+│   └── graph.py                     # CLI engine (dependency frontier, DFS cycle detection, retention curve & FIRe)
 │
 ├── templates/                       # Standard blueprints for vault file generation
-│   ├── concept.template.md          # Evergreen card blueprint (Matuschak thesis + Amos derivation)
+│   ├── concept.template.md          # Evergreen card blueprint (declarative thesis + causal derivation)
 │   ├── session.template.md          # Live session note blueprint (Frontmatter + Obsidian callouts)
 │   └── domain_index.template.md     # Domain map blueprint with curriculum and auto-generated horizon
 │
 ├── config.example.json              # Sample configuration pointing to external Obsidian Vault
 ├── requirements.txt                 # Python dependencies (pyyaml>=6.0)
 ├── GEMINI.md                        # Workspace rules & Socratic mentor behavioral specification
-├── CONCEPT.md                       # Comprehensive architectural & pedagogical specification
-├── ROADMAP.md                       # Implementation roadmap & milestone checklist
 └── README.md                        # User guide, architecture overview, and attribution
 ```
-
----
-
-## 8. Language Conventions
-
-Antigravity Tutor enforces a clear language boundary:
-1. **System & Repository Artifacts (English):**
-   Configuration files, skills (`SKILL.md`), scripts (`scripts/graph.py`), templates, system instructions (`GEMINI.md`), git commits, and documentation are authored strictly in **English**.
-2. **User Interaction & Obsidian Notes (Dynamic Mirroring):**
-   Conversational dialogue, explanations, quizzes, session journals (`sessions/`), and concept cards (`knowledge/`) **dynamically mirror the language you speak**. If you ask a question in Russian, the tutor conducts the lesson, renders notes, and quizzes you in Russian. If you interact in English, it responds in English.
-
----
-
-## 9. Credits & Acknowledgments
-
-- **Amos Blomqvist:** Core pedagogical framework and teaching loop adapted from [amosblomqvist/learn](https://github.com/amosblomqvist/learn) (*"How I Use AI to Learn Things"*).
-- **Grant Sanderson (3Blue1Brown):** Motivated discovery pedagogical principle (*"How could I have discovered this myself?"*).
-- **Andy Matuschak:** Evergreen Notes methodology (declarative titles, atomic notes, conceptual compression).
-- **Jean-Paul Doignon & Jean-Claude Falmagne:** Knowledge Space Theory (KST) mathematical framework for prerequisite dependency frontiers.
-- **Obsidian:** The premier extensible personal knowledge graph environment.
-- **Google Antigravity:** Next-generation autonomous AI agent execution platform.
