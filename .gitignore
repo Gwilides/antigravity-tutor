@@ -1,0 +1,22 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+build/
+dist/
+*.egg-info/
+
+# Editors & IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Config & OS
+config.json
+.DS_Store
+Thumbs.db
