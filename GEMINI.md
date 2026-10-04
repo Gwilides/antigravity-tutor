@@ -72,10 +72,10 @@ The repository code is strictly decoupled from personal notes. The knowledge rep
 
 Recognize and route the following commands:
 
-* **`/teach <topic>`** (primary) or **`/study <topic>`** (alias):
+* **`/teach <topic>`**:
   Initiates a structured deep-learning session on the specified topic, or resumes an unfinished session.
 * **`/refresh [domain]`**:
-  Launches a voluntary, high-efficiency 5-minute active recall workout on 3–5 high-priority cards using topological Hub Priority and FSRS forgetting curve mechanics.
+  Launches a voluntary, high-efficiency 5-minute active recall workout on 3–5 high-priority cards using topological Hub Priority and simple forgetting curve mechanics ($R = 2^{-\frac{\Delta t}{I}}$).
 * **`/status`**:
   Displays a summary of the active knowledge frontier (Inner Fringe, Outer Fringe / Ready topics) and coverage statistics across domains.
 
